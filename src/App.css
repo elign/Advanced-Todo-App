@@ -1,0 +1,185 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  margin: 0px;
+  padding-top: 7rem;
+  font-family: 'Nunito Sans', sans-serif;
+  background-color: rgb(157, 175, 255);
+}
+
+h1 {
+  margin: 20px 0px;
+  text-align: center;
+  font-weight: 600;
+
+}
+
+button {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 16px;
+  width: 100px;
+  font-weight: 600;
+}
+
+input {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 18px;
+}
+
+.input-signup {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-center {
+  background-color: white;
+  padding: 1.5rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.input {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+  gap: 50px;
+}
+
+.input-field {
+  width: 20rem;
+  height: 3rem;
+  padding-left: 15px;
+  border: none;
+  border-bottom: 1.5px solid rgb(187, 176, 176);
+  margin-bottom: 30px;
+}
+
+.input-field:focus {
+  outline: none;
+}
+
+.input-button {
+  background-color: black;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 50px;
+  margin-bottom: 30px;
+}
+
+.todo {
+  display: flex;
+  margin-top: 1.5rem;
+  justify-content: space-between;
+  height: 3rem;
+  gap: 15px;
+  padding-bottom: 10px;
+}
+
+.todo p{
+  width: 20rem;
+  line-height: 18px;
+  margin-bottom: 10rem;
+  margin-top: 5px;
+}
+
+.todo button {
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.done {
+  background-color: green;
+}
+
+.remove {
+  background-color: red;
+}
+
+.login-signup{
+  margin: 20px 0px;
+  width: 100%;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  transition-duration: 300ms;
+}
+
+.login-signup:hover {
+  color: white;
+  background-color: black;
+}
+
+.profile {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0rem;
+  padding: 0px 50px;
+}
+
+.hello-name {
+  font-size: xx-large;
+}
+
+.logout {
+  font-size: large;
+  line-height: 40%;
+  transition-duration: 300ms;
+  cursor: pointer;
+}
+
+.logout:hover {
+  text-decoration: underline;  
+}
+
+.login-with-google {
+  width: 100%;
+  height: 50px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition-duration: 300ms;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin-bottom: 20px;
+}
+
+.login-with-google:hover {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+
+@media (max-width: 600px) {
+
+  body {
+    padding-top: 2vh;
+  }
+  .page-center {
+    margin-bottom: 30px;
+    width: 80vw;
+  }
+  .input {
+    flex-wrap: wrap;
+    gap: 0px;
+  }
+  .input-field {
+    width: 75vw;
+  }
+
+  button {
+    height: 50px;
+  }
+}
