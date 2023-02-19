@@ -14,8 +14,8 @@ export default function List(props) {
     return (
         <div className="todo">
             <p style={ doneOrNot ? taskDone : taskNotDone}>{title}</p>
-            <button onClick={() => toggleComplete(id, !doneOrNot)} className="done">Done</button>
-            <button onClick={() => handleDelete(id)} className="remove">Remove</button>
+            <button onClick={() => toggleComplete(id, !doneOrNot)} className="todo-button done">Done</button>
+            <button onClick={() => handleDelete(id)} className="todo-button remove">Remove</button>
         </div>
     )
 };

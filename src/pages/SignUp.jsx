@@ -23,13 +23,14 @@ export default function SignUp() {
     const register = (e) => {
         e.preventDefault();
         if (!details.name) alert("Please enter name");
-        registerWithEmailAndPassword(details.name, details.email, details.password);
+        registerWithEmailAndPassword(details.name, details.email, details.password)
     };
 
     useEffect(() => {
-        if (loading) return;
-        if (user) navigate("/profile");
-    }, [user, loading]);
+        if (user) {
+            navigate("/profile");
+        }
+    }, [user]);
 
     function handleChange(event) {
         const {name, value} = event.target

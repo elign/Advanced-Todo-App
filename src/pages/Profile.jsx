@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import TodoForm from './TodoForm'
 import { onAuthStateChanged, getAuth, signOut } from 'firebase/auth'
 import {auth} from '../firebase/firebaseConfig'
-
+import { getDoc, setDoc } from "firebase/firestore"
 import {
   collection,
   query,
@@ -17,24 +17,29 @@ import { db } from "../firebase/firebaseConfig";
 
 export default function Profile() {
   const navigate = useNavigate()
-  const [userDetails, setUserDetails] = useState("")
+  const [userDetails, setUserDetails] = useState()
   const [todos, setTodos] = useState()
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async(user) => {
       if(user) {
-        const q = query(collection(db, "users"));
-        const unsub = onSnapshot(q, (querySnapshot) => {
-          let details = "";
-          querySnapshot.forEach((doc) => {
-            if(doc.uid == user.uid) {
-              console.log(doc.name)
-              details = doc.name;
-            }
-          });
-          setUserDetails(details);
-        });
-        return () => unsub();
+        console.log(user)
+        setUserDetails(user.displayName)
+        setUserEmail(user.email);
+        const docRef = doc(db, "individual-todos", user.email)
+        try {
+          const docSnap = await getDoc(docRef);
+          if(docSnap.exists()) {
+              console.log(docSnap.data().task);
+              setTodos(docSnap.data().task)
+          } else {
+              console.log("Document does not exist")
+          }
+  
+        } catch(error) {
+            console.log(error)
+        }
       }
     })
 
@@ -43,30 +48,67 @@ export default function Profile() {
   const handleEdit = async (todo, title) => {
     await updateDoc(doc(db, "todos", id), { title: title });
   };
-  const toggleComplete = async (id, newValue) => {
-    await updateDoc(doc(db, "todos", id), { completed: newValue });
+  const toggleComplete = async (idx, newValue) => {
+    // await updateDoc(doc(db, "todos", id), { completed: newValue });
+    const docRef = doc(db, "individual-todos", userEmail)
+    const arr = [];
+    for(let i = 0; i < todos.length; i++) {
+      if(i != idx) 
+        arr.push(todos[i])
+      else {
+        arr.push({title: todos[i].title, completed: newValue})
+      }
+        
+    }
+    setTodos(arr)
+    await setDoc(docRef, {task: arr});
   };
-  const handleDelete = async (id) => {
-    await deleteDoc(doc(db, "todos", id));
+  const handleDelete = async (idx) => {
+    // // await deleteDoc(doc(db, "individual-todos", idx));
+    const docRef = doc(db, "individual-todos", userEmail)
+    const arr = [];
+    for(let i = 0; i < todos.length; i++) {
+      if(i != idx) 
+      arr.push(todos[i])
+    }
+
+    // setTodos(prevValue => {
+    //   return ([data, ...prevValue])
+    // })
+    setTodos(arr)
+    await setDoc(docRef, {task: arr});
   };
 
-  useEffect(() => {
-    const q = query(collection(db, "todos"));
-    const unsub = onSnapshot(q, (querySnapshot) => {
-      let todosArray = [];
-      querySnapshot.forEach((doc) => {
-        todosArray.push({ ...doc.data(), id: doc.id });
-      });
-      setTodos(todosArray);
-    });
-    return () => unsub();
-  }, [])
+  const handleSubmit = async(e, title, setTitle) => {
+
+    e.preventDefault()
+    const docRef = doc(db, "individual-todos", userEmail)
+    const data = {
+      title: title,
+      completed: false,
+    }
+    const newData = todos == undefined ? {task: [data]} : {task: [data, ...todos]}
+    // setTodos(prevValue => {
+    //   return ([data, ...prevValue])
+    // })
+
+    setTodos(newData.task)
+    await setDoc(docRef, newData);
+    setTitle("")
+    // window.location.reload(false)
+  }
   
   const logOutUser = () => {
     const auth = getAuth();
     signOut(auth).then(() => {  
       navigate("/")
     }) 
+  }
+
+  const clearAll = () => {
+    const docRef = doc(db, "individual-todos", userEmail)
+    setTodos([])
+    setDoc(docRef, {});
   }
     
   return (
@@ -76,14 +118,17 @@ export default function Profile() {
           <>
             <div className='profile'>
               <span className='hello-name'>Hello {userDetails} !</span>
-              <p onClick={logOutUser} className='logout'>Log out</p>
+              <div><p onClick={logOutUser} className='logout'>Log out</p>
+              <p onClick={clearAll} className='logout'>Clear All</p></div>
+              
             </div>
-            {todos == undefined ? "not found" : 
-              <TodoForm 
+            { <TodoForm
+              id={userEmail}
               todos={todos}
               toggleComplete={toggleComplete}
               handleDelete={handleDelete}
-              handleEdit={handleEdit} 
+              handleEdit={handleEdit}
+              handleSubmit={handleSubmit} 
               /> }
           </>
         ) : (

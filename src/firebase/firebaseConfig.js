@@ -2,7 +2,9 @@
 import { initializeApp } from "firebase/app";
 import {  getFirestore, 
           collection, 
-          addDoc, 
+          addDoc,
+          setDoc,
+          doc, 
           where, 
           query, 
           getDocs 
@@ -16,6 +18,7 @@ import {
           createUserWithEmailAndPassword,
           sendPasswordResetEmail,
           signOut,
+          updateProfile,
 }from "firebase/auth";
 
 
@@ -48,6 +51,16 @@ const signInWithGoogle = async () => {
         authProvider: "google",
         email: user.email,
       });
+
+      await setDoc(doc(db, "individual-todos", user.email), {
+        task: [
+                {
+                  uid: 0,
+                  completed: false,
+                  title: "Sample Task"
+                }
+        ]
+      });
     }
   } catch (err) {
     console.error(err);
@@ -69,12 +82,26 @@ const registerWithEmailAndPassword = async (name, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
+    await updateProfile(user, {
+      displayName: name
+    });
     await addDoc(collection(db, "users"), {
       uid: user.uid,
       name,
       authProvider: "local",
       email,
     });
+
+    await setDoc(doc(db, "individual-todos", email), {
+      task: [
+              {
+                uid: 0,
+                completed: false,
+                title: "Sample Task"
+              }
+      ]
+    });
+
   } catch (err) {
     console.error(err);
     alert(err.message);
