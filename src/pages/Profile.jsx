@@ -119,7 +119,6 @@ export default function Profile() {
               todos={todos}
               toggleComplete={toggleComplete}
               handleDelete={handleDelete}
-              handleEdit={handleEdit}
               handleSubmit={handleSubmit} 
               /> }
           </>
