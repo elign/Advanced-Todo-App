@@ -6,16 +6,13 @@ import { onAuthStateChanged, getAuth, signOut } from 'firebase/auth'
 import {auth} from '../firebase/firebaseConfig'
 import { getDoc, setDoc } from "firebase/firestore"
 import {
-  collection,
-  query,
-  onSnapshot,
   doc,
-  updateDoc,
-  deleteDoc,
 } from "firebase/firestore";
+
 import { db } from "../firebase/firebaseConfig";
 
 export default function Profile() {
+
   const navigate = useNavigate()
   const [userDetails, setUserDetails] = useState()
   const [todos, setTodos] = useState()
@@ -24,17 +21,21 @@ export default function Profile() {
   useEffect(() => {
     onAuthStateChanged(auth, async(user) => {
       if(user) {
-        console.log(user)
         setUserDetails(user.displayName)
         setUserEmail(user.email);
+
+        // Reference of the doc that you want to edit
         const docRef = doc(db, "individual-todos", user.email)
         try {
+
+          // Brings the value of the docRef collection
           const docSnap = await getDoc(docRef);
           if(docSnap.exists()) {
-              console.log(docSnap.data().task);
-              setTodos(docSnap.data().task)
+
+            setTodos(docSnap.data().task)
           } else {
-              console.log("Document does not exist")
+
+            console.log("Document does not exist")
           }
   
         } catch(error) {
@@ -45,11 +46,8 @@ export default function Profile() {
 
   }, [])
 
-  const handleEdit = async (todo, title) => {
-    await updateDoc(doc(db, "todos", id), { title: title });
-  };
+
   const toggleComplete = async (idx, newValue) => {
-    // await updateDoc(doc(db, "todos", id), { completed: newValue });
     const docRef = doc(db, "individual-todos", userEmail)
     const arr = [];
     for(let i = 0; i < todos.length; i++) {
@@ -63,8 +61,9 @@ export default function Profile() {
     setTodos(arr)
     await setDoc(docRef, {task: arr});
   };
+
   const handleDelete = async (idx) => {
-    // // await deleteDoc(doc(db, "individual-todos", idx));
+
     const docRef = doc(db, "individual-todos", userEmail)
     const arr = [];
     for(let i = 0; i < todos.length; i++) {
@@ -72,9 +71,6 @@ export default function Profile() {
       arr.push(todos[i])
     }
 
-    // setTodos(prevValue => {
-    //   return ([data, ...prevValue])
-    // })
     setTodos(arr)
     await setDoc(docRef, {task: arr});
   };
@@ -88,14 +84,10 @@ export default function Profile() {
       completed: false,
     }
     const newData = todos == undefined ? {task: [data]} : {task: [data, ...todos]}
-    // setTodos(prevValue => {
-    //   return ([data, ...prevValue])
-    // })
 
     setTodos(newData.task)
     await setDoc(docRef, newData);
     setTitle("")
-    // window.location.reload(false)
   }
   
   const logOutUser = () => {

@@ -1,25 +1,9 @@
 import List from '../components/List'
-import { useEffect, useState } from 'react'
-import { collection, addDoc, setDoc } from "firebase/firestore";
-import {db} from '../firebase/firebaseConfig'
+import { useState } from 'react'
 const TodoForm = (props) => {
 
   const {todos, handleSubmit, toggleComplete, handleEdit, handleDelete} = props
   const [title, setTitle] = useState("")
-
-  // const handleSubmit = async (e) => {
-    
-  //   e.preventDefault();
-  //   if(title != "") {
-  //     await addDoc(collection(db, "todos"), {
-  //       title: title,
-  //       completed: false,
-  //   });
-  //   setTitle("")
-  //   }
-  // }
-
-
 
   return (
     <div className="page-center">

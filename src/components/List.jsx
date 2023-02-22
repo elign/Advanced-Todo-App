@@ -1,7 +1,7 @@
 
 export default function List(props) {
 
-    const {id, title, doneOrNot, toggleComplete, handleEdit, handleDelete} = props
+    const {id, title, doneOrNot, toggleComplete, handleDelete} = props
 
     const taskDone =  {
         textDecoration: "line-through"
