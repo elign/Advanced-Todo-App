@@ -1,7 +1,4 @@
 
-![Logo](https://www.behance.net/gallery/164414681/TodoIt/modules/927251917)
-
-
 # Todo-It
 
 We designed this project to learn the following:
