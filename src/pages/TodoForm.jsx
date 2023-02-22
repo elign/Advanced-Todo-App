@@ -1,41 +1,14 @@
 import List from '../components/List'
-import { useEffect, useState } from 'react'
-import { collection, addDoc } from "firebase/firestore";
-import {db} from '../firebase/firebaseConfig'
-
+import { useState } from 'react'
 const TodoForm = (props) => {
 
-  const {todos, toggleComplete, handleEdit, handleDelete} = props
+  const {todos, handleSubmit, toggleComplete, handleEdit, handleDelete} = props
   const [title, setTitle] = useState("")
-
-  const handleSubmit = async (e) => {
-    
-    e.preventDefault();
-    if(title != "") {
-      await addDoc(collection(db, "todos"), {
-        title: title,
-        completed: false,
-    });
-    setTitle("")
-    }
-  }
-
-  const list = todos.map((todo) => (
-    <List
-      key={todo.id} 
-      id={todo.id}
-      title={todo.title}
-      doneOrNot={todo.completed}
-      toggleComplete={toggleComplete}
-      handleDelete={handleDelete}
-      handleEdit={handleEdit}
-    />))
-
 
   return (
     <div className="page-center">
       <h1>To Do List App</h1>
-      <form onSubmit={handleSubmit} className="input">
+      <form className="input">
         <input 
           value={title}
           type="text" 
@@ -43,9 +16,18 @@ const TodoForm = (props) => {
           onChange={(e) => setTitle(e.target.value)} 
           placeholder="Add Todo"
           />
-        <button className="input-button done">Add</button>
+        <button onClick={(e) => handleSubmit(e, title, setTitle)}className="input-button done">Add</button>
       </form>
-      {list}
+      {todos != undefined ? todos.map((todo, idx) => (
+        <List
+          key={idx} 
+          id={idx}
+          title={todo.title}
+          doneOrNot={todo.completed}
+          toggleComplete={toggleComplete}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />)) : ""}
     </div>
   )
 }

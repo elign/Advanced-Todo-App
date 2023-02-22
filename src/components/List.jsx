@@ -1,7 +1,7 @@
 
 export default function List(props) {
 
-    const {id, title, doneOrNot, toggleComplete, handleEdit, handleDelete} = props
+    const {id, title, doneOrNot, toggleComplete, handleDelete} = props
 
     const taskDone =  {
         textDecoration: "line-through"
@@ -14,8 +14,8 @@ export default function List(props) {
     return (
         <div className="todo">
             <p style={ doneOrNot ? taskDone : taskNotDone}>{title}</p>
-            <button onClick={() => toggleComplete(id, !doneOrNot)} className="done">Done</button>
-            <button onClick={() => handleDelete(id)} className="remove">Remove</button>
+            <button onClick={() => toggleComplete(id, !doneOrNot)} className="todo-button done">Done</button>
+            <button onClick={() => handleDelete(id)} className="todo-button remove">Remove</button>
         </div>
     )
 };

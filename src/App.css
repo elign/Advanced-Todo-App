@@ -2,18 +2,23 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  align-content: center;
   margin: 0px;
-  padding-top: 7rem;
+  padding-top: 4rem;
   font-family: 'Nunito Sans', sans-serif;
   background-color: rgb(157, 175, 255);
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px; 
 }
 
 h1 {
   margin: 20px 0px;
   text-align: center;
   font-weight: 600;
-
 }
 
 button {
@@ -38,6 +43,7 @@ input {
   padding: 1.5rem 1.5rem;
   border-radius: 10px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  margin-bottom: 40px;
 }
 .input {
   display: flex;
@@ -84,7 +90,7 @@ input {
   margin-top: 5px;
 }
 
-.todo button {
+.todo-button {
   border: none;
   color: white;
   cursor: pointer;
@@ -162,13 +168,13 @@ input {
 }
 
 
-@media (max-width: 600px) {
+/* @media only screen and (min-width: 768px) {
 
   body {
     padding-top: 2vh;
   }
   .page-center {
-    margin-bottom: 30px;
+    margin: 30px;
     width: 80vw;
   }
   .input {
@@ -182,4 +188,4 @@ input {
   button {
     height: 50px;
   }
-}
+} */
