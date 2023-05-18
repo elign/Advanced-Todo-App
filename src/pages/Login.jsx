@@ -63,7 +63,7 @@ export default function Login() {
                 <button className='login-signup'>Login</button>
             </form>
             <div>
-                <button onClick={loginWithGoogleUser} className='login-with-google'><img className="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>Login With Google</button>
+                <button onClick={loginWithGoogleUser} className='login-with-google'>Login With Google</button>
             </div>
             
             <div>
