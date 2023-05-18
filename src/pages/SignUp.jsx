@@ -75,7 +75,7 @@ export default function SignUp() {
                 <button className='login-signup'>Sign Up</button>
             </form>
             <div>
-                <button onClick={signInWithGoogle} className='login-with-google'><img className="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>Sign Up With Google</button>
+                <button onClick={signInWithGoogle} className='login-with-google'>Sign Up With Google</button>
             </div>
             <div>
                 Already have an account? <Link to="/">Login</Link> now.
